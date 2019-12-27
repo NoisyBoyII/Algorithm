@@ -19,7 +19,7 @@ class SinglyLinkedList:
 
         temp = self.head
         while temp is not None:
-            print temp.data
+            print "%s ->" % str(temp.data),
             temp = temp.next
 
     # This function will add new at the front position
@@ -65,11 +65,15 @@ class SinglyLinkedList:
             if increment != index:
                 print "Index out of Bound"
 
+    # This function will pop the node at the front
+
     def popAtFront(self):
         if self.head is None:
             print "Empty"
             return
         self.head = self.head.next
+
+    # This function will pop the node from the end
 
     def popAtEnd(self):
         if self.head is None:
@@ -81,6 +85,8 @@ class SinglyLinkedList:
             previous = temp
             temp = temp.next
         previous.next = None
+
+    # This function will pop the node from specific index
 
     def popAtIndex(self,index):
         if self.head is None:
@@ -119,15 +125,15 @@ if __name__ == "__main__":
     ll.pushAtIndex(0,0)
     ll.pushAtIndex(4,4)
     ll.printLinkedList()
-    print "Poping at progress"
+    print "\nPoping at progress"
     ll.popAtFront()
     print "At Front"
     ll.printLinkedList()
     ll.popAtEnd()
-    print "At End"
+    print "\nAt End"
     ll.printLinkedList()
     ll.popAtIndex(6)
-    print "At Specific Index"
+    print "\nAt Specific Index"
     ll.printLinkedList()
     ll.popAtIndex(11)
     print "Index Out of Bound Case"
