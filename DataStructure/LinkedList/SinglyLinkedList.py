@@ -1,6 +1,9 @@
 from Node import Node
 
-
+"""
+Singly linked list in which there is one head from which it will extend to other node via saving the address in front.
+In this class, I have implemented addtion and deletion at front , end and specified index .
+"""
 class SinglyLinkedList:
 
     def __init__(self,data=None):
@@ -20,7 +23,7 @@ class SinglyLinkedList:
         temp = self.head
         while temp is not None:
             print "%s ->" % str(temp.data),
-            temp = temp.next
+            temp = temp.front
 
     # This function will add new at the front position
 
@@ -38,10 +41,10 @@ class SinglyLinkedList:
             self.head = Node(data,None)
             return
         temp = self.head
-        while temp.next is not None:
-            temp = temp.next
+        while temp.front is not None:
+            temp = temp.front
         new = Node(data,None)
-        temp.next = new
+        temp.front = new
 
     # This function will add new node at the Specified Position and if index is 0 than it will add at the head
 
@@ -55,40 +58,40 @@ class SinglyLinkedList:
         else:
             temp = self.head
             increment = 1
-            while temp.next is not None:
+            while temp.front is not None:
                 if increment == index:
-                    new = Node(data, temp.next)
-                    temp.next = new
+                    new = Node(data, temp.front)
+                    temp.front = new
                     break
-                temp = temp.next
+                temp = temp.front
                 increment += 1
             if increment != index:
                 print "Index out of Bound"
 
-    # This function will pop the node at the front
+    # This function will pop node at front
 
-    def popAtFront(self):
+    def popFromFront(self):
         if self.head is None:
             print "Empty"
             return
-        self.head = self.head.next
+        self.head = self.head.front
 
-    # This function will pop the node from the end
+    # This function will pop node from  end
 
-    def popAtEnd(self):
+    def popFromEnd(self):
         if self.head is None:
             print "Empty"
             return
         temp = self.head
         previous = None
-        while temp.next is not None:
+        while temp.front is not None:
             previous = temp
-            temp = temp.next
-        previous.next = None
+            temp = temp.front
+        previous.front = None
 
     # This function will pop the node from specific index
 
-    def popAtIndex(self,index):
+    def popFromIndex(self,index):
         if self.head is None:
             print "Empty"
             return
@@ -99,13 +102,13 @@ class SinglyLinkedList:
             temp = self.head
             increment = 1
             previous = None
-            while temp.next is not None:
+            while temp.front is not None:
                 if increment == index:
-                    previous.next = temp.next
+                    previous.front = temp.front
                     break
                 increment += 1
                 previous = temp
-                temp = temp.next
+                temp = temp.front
             if increment != index:
                 print "Index Out of bound"
 
