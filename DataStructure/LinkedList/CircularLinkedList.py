@@ -1,52 +1,61 @@
+"""
+Circular link list is a type of normal link list in which end is not empty like singlylinkedlist bt
+end represent to front so you can iterate it back to head
+"""
+
 from Node import Node
 
-"""
-Doubly Linked list in which every node have back and front for saving the next and the previous node link so that we 
-can traverse at both side. I have implemented addition and deletion from front , end , specified index.
-"""
 
-
-class DoublyLinkedList:
-    def __init__(self,data,front=None,previous=None):
+class CircularLinkedList:
+    def __init__(self,data):
         if data is None:
             self.head = None
             return
+        self.head = Node(data,None)
+        self.head.front = self.head
 
-        self.head = Node(data, front, previous)
+    # This will circular linked list
 
-    # This function print doubly linked list
-
-    def printDoublyLinkedList(self):
+    def printCircularLL(self):
         if self.head is None:
             print "Empty"
             return
         temp = self.head
-        while temp is not None:
-            print "%s <->" % temp.data,
+        while True:
+            print "%s" % temp.data,
+            if temp.front == self.head:
+                break
             temp = temp.front
 
-    # This function push node at front and if DLL head is empty than it will create new node and add that to head
+
+    # This function push node at front
 
     def pushAtFront(self,data):
         if self.head is None:
-            self.head = Node(data)
+            self.head = Node(data,None)
             return
-        self.head = Node(data,self.head)
+        temp = self.head
+        while temp.front != self.head:
+            temp = temp.front
+        nodeForAddition = Node(data, self.head)
+        self.head = nodeForAddition
+        temp.front = self.head
 
     # This function push node at end
 
     def pushAtEnd(self,data):
         if self.head is None:
-            self.head = Node(data)
+            self.head = Node(data,None)
             return
         temp = self.head
-        while temp.front is not None:
+        while temp.front != self.head:
             temp = temp.front
-        temp.front = Node(data,None,temp)
+        nodeForAddtion = Node(data,self.head)
+        temp.front = nodeForAddtion
 
     # This function push node at the specific index and index not found than will print Index out of bound
 
-    def pustAtIndex(self,data,index):
+    def pushAtIndex(self,data,index):
         if self.head is None:
             self.head = Node(data)
             return
@@ -55,14 +64,16 @@ class DoublyLinkedList:
             return
         temp = self.head
         increment = 1
-        while temp.front is not None:
+        while temp.front != self.head:
             if increment == index:
-                temp.front = Node(data,temp.front,temp)
+                previous.front = Node(data, temp.front)
                 break
             increment += 1
+            previous = temp
             temp = temp.front
         if increment != index:
             print "Index out of bound"
+
 
     # This function pop node from front
 
@@ -70,8 +81,11 @@ class DoublyLinkedList:
         if self.head is None:
             print "Empty"
             return
+        temp = self.head
+        while temp.front != self.head:
+            temp = temp.front
         self.head = self.head.front
-        self.head.back = None
+        temp.front = self.head
 
     # This function pop node from end
 
@@ -80,9 +94,11 @@ class DoublyLinkedList:
             print "Empty"
             return
         temp = self.head
-        while temp.front is not None:
+        previous = None
+        while temp.front != self.head:
+            previous = temp
             temp = temp.front
-        temp.back.front = None
+        previous.front = self.head
 
     # This function pop node from specific Index
 
@@ -92,13 +108,11 @@ class DoublyLinkedList:
             return
         temp = self.head
         increment = 1
-        while temp.front is not None:
+        while temp.front != self.head:
             if increment == index:
-                temp.back.front = temp.front
-                temp.front.back = temp.back
-                temp.front = None
-                temp.back = None
+                previous.front = temp.front
                 break
+            previous = temp
             temp = temp.front
             increment += 1
         if increment != index:
@@ -106,18 +120,19 @@ class DoublyLinkedList:
 
 
 if __name__ == "__main__":
-    dll = DoublyLinkedList(1)
-    dll.pushAtFront(0)
-    dll.pushAtEnd(2)
-    dll.pushAtEnd(3)
-    dll.pushAtEnd(5)
-    dll.pushAtEnd(6)
-    dll.printDoublyLinkedList()
+    cll = CircularLinkedList(2)
+    cll.pushAtFront(1)
+    cll.pushAtEnd(3)
+    cll.pushAtEnd(4)
+    cll.pushAtEnd(6)
+    cll.pushAtEnd(7)
+    cll.pushAtEnd(8)
+    cll.printCircularLL()
     print "\nPush at Index"
-    dll.pustAtIndex(4,4)
-    dll.printDoublyLinkedList()
+    cll.pushAtIndex(5, 5)
+    cll.printCircularLL()
     print"\nPop at Progress"
-    dll.popFromFront()
-    dll.popFromEnd()
-    dll.popFromIndex(4)
-    dll.printDoublyLinkedList()
+    cll.popFromFront()
+    cll.popFromEnd()
+    cll.popFromIndex(4)
+    cll.printCircularLL()
